@@ -1,4 +1,5 @@
-MAX_KEY_SIZE = 26
+
+
 #Mode Function
 def getMode():
     while True:
@@ -9,20 +10,21 @@ def getMode():
         else:
             print('Enter either "encrypt" or "e" or "decrypt" or "d".')
 
-#Get Message From User
+#Get Message
 def getMessage():
     print('Enter your message:')
     return input()
 
-#Get Message From Key
+#Get Key
 def getKey():
+    max_size = 26
     key = 0
     while True:
-        print('Enter the key number (1-%s)' % (MAX_KEY_SIZE))
+        print('Enter the key number (1-%s)' % (max_size))
         key = input()
         if(key.isdigit()):
             key = int(key)
-            if (key >= 1 and key <= MAX_KEY_SIZE):
+            if (key >= 1 and key <= max_size):
                 return key
 
 #Decide Action        
@@ -46,7 +48,7 @@ def encryptMessage(text, key):
 
             c_index = ord(c) - ord('A')
 
-            # shift the current character by key positions
+            # shift txhe current character by key positions
             c_shifted = (c_index + key) % 26 + ord('A')
 
             c_new = chr(c_shifted)
@@ -55,7 +57,6 @@ def encryptMessage(text, key):
 
         elif c.islower(): #check if its a lowecase character
 
-            # subtract the unicode of 'a' to get index in [0-25) range
             c_index = ord(c) - ord('a')
 
             c_shifted = (c_index + key) % 26 + ord('a')
@@ -73,7 +74,6 @@ def encryptMessage(text, key):
 
         else:
 
-            # if its neither alphabetical nor a number, just leave it like that
             encryptMessageed += c
 
     return encryptMessageed
@@ -89,7 +89,6 @@ def decryptMessage(text, key):
 
             c_index = ord(c) - ord('A')
 
-            # shift the current character to left by key positions to get its original position
             c_og_pos = (c_index - key) % 26 + ord('A')
 
             c_og = chr(c_og_pos)
@@ -115,7 +114,6 @@ def decryptMessage(text, key):
 
         else:
 
-            # if its neither alphabetical nor a number, just leave it like that
             decryptMessageed += c
 
     return decryptMessageed
