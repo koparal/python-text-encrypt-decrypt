@@ -1,9 +1,7 @@
-
-
-#Mode Function
-def getMode():
+#Get Choose Function
+def getChoose():
     while True:
-        print('Would you like to (E)ncrypt or (D)ecrypt?:')
+        print('\nWould you like to (E)ncrypt or (D)ecrypt?:')
         mode = input().lower()
         if mode in 'encrypt e decrypt d'.split():
             return mode
@@ -28,9 +26,9 @@ def getKey():
                 return key
 
 #Decide Action        
-def decideActionAndRun(mode,text,key):
+def decideActionAndRun(choose,text,key):
     val = ""
-    if(mode[0] == "e"):
+    if(choose[0] == "e"): 
         val = encryptMessage(message, key)
     else:
         val = decryptMessage(message, key)
@@ -43,7 +41,7 @@ def encryptMessage(text, key):
     encryptMessageed = ""
 
     for c in text:
-
+        # is upper
         if c.isupper(): #check if it's an uppercase character
 
             c_index = ord(c) - ord('A')
@@ -54,7 +52,8 @@ def encryptMessage(text, key):
             c_new = chr(c_shifted)
 
             encryptMessageed += c_new
-
+            
+        # is lower
         elif c.islower(): #check if its a lowecase character
 
             c_index = ord(c) - ord('a')
@@ -64,16 +63,15 @@ def encryptMessage(text, key):
             c_new = chr(c_shifted)
 
             encryptMessageed += c_new
-
+            
+        # is digit
         elif c.isdigit():
 
-            # if it's a number,shift its actual value
             c_new = (int(c) + key) % 10
 
             encryptMessageed += str(c_new)
 
         else:
-
             encryptMessageed += c
 
     return encryptMessageed
@@ -84,7 +82,8 @@ def decryptMessage(text, key):
     decryptMessageed = ""
 
     for c in text:
-
+        
+        # is upper
         if c.isupper():
 
             c_index = ord(c) - ord('A')
@@ -94,7 +93,8 @@ def decryptMessage(text, key):
             c_og = chr(c_og_pos)
 
             decryptMessageed += c_og
-
+            
+        # is lower
         elif c.islower():
 
             c_index = ord(c) - ord('a')
@@ -104,26 +104,25 @@ def decryptMessage(text, key):
             c_og = chr(c_og_pos)
 
             decryptMessageed += c_og
-
+            
+        # is digit
         elif c.isdigit():
 
-            # if it's a number,shift its actual value
             c_og = (int(c) - key) % 10
-
+            
             decryptMessageed += str(c_og)
 
         else:
-
-            decryptMessageed += c
+           decryptMessageed += c
 
     return decryptMessageed
 
 
 while (1):
     
-    mode = getMode()
+    choose = getChoose()
     message = getMessage()
     key = getKey()
     
     print('Your translated message is:')
-    print(decideActionAndRun(mode,message,key))
+    print(decideActionAndRun(choose,message,key))
